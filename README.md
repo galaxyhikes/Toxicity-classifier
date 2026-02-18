@@ -9,7 +9,7 @@ A comprehensive machine learning project for detecting and classifying toxic com
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [How to Use](#how-to-use)
-- [Contributing](#contributing)
+- [Results & Evaluation](#results--evaluation)
 - [Support](#support)
 
 ## What It Does
@@ -168,33 +168,49 @@ Toxicity-classifier/
 # - Sentiment Analysis: Positive / Neutral / Negative
 ```
 
-## Model Details
+## Results & Evaluation
 
-### Traditional ML Approach
-- **Implemented Models**: 
-  - Naive Bayes
-  - Support Vector Machine (SVM)
-  - Gradient Boosting (GB)
-  - Multi-Layer Perceptron (MLP)
-- **Best Performers**: Gradient Boosting and Random Forest classifiers
-- **Feature Extraction**: Combined 20,000-dimensional vectors from:
-  - TF-IDF vectorization (term frequency distribution)
-  - Count vectorization (word frequency patterns)
-- **Training Data**: 50,000 stratified samples with proportional representation of each toxicity category
-- **Evaluation Strategy**: Stratified K-Fold cross-validation with ROC-AUC scoring
-- **Key Insights**: 
-  - Sentiment analysis alone is insufficient; toxicity is often masked within seemingly neutral linguistic structures
-  - Toxicity requires advanced classification methodology beyond sentiment analysis
-  - Word frequency distributions are critical for determining toxicity
+### Traditional ML Model Performance
 
-### AI-Based Approach
-- **Model**: Google Gemini 2.0 Flash
-- **Strengths**: 
-  - Understands context and nuance
-  - Detects subtle toxicity (sarcasm, passive-aggression)
-  - Provides reasoning for classifications
-  - Handles cultural and linguistic variations
-- **Output Format**: Structured JSON with toxicity levels, categories, and scores
+The project evaluated six machine learning algorithms on both controlled training data and real-world external validation:
+
+#### Training Performance
+- **Multi-Layer Perceptron (MLP)**: 95% accuracy, 94% AUC-ROC
+  - 71% recall and 77% precision for toxic comments
+  - Strong balance between true positives and false positives
+  - Significant gap between training and validation accuracy (overfitting concerns)
+
+- **Gradient Boosting & Random Forest**: Best overall performers
+  - Superior generalization to unseen data
+  - More stable learning curves compared to MLP
+
+- **Naive Bayes**: High precision but low recall
+  - Excellent at avoiding false positives
+  - Missed substantial portion of actual toxic comments
+
+#### External Validation (Real-World Data)
+
+Models were tested on **200 manually labeled Reddit comments** from r/politics to assess real-world robustness:
+
+- **Support Vector Machine (SVM)**: F1 score **0.72**, AUC-ROC **0.79**
+  - Best external validation performance
+  - Maintained balanced precision-recall trade-off on unseen data
+  - Superior generalization capability
+
+- **MLP**: Struggled with external validation despite strong training metrics
+  - Revealed overfitting limitations of models trained on controlled environments
+  - Highlighted importance of testing on diverse, real-world datasets
+
+### Key Insight
+
+**Sentiment analysis alone is insufficient** for toxicity detection—toxicity is often masked within seemingly neutral linguistic structures. Word frequency distributions and advanced classification methodology are critical for accurate detection.
+
+### AI-Based Extension: Gemini 2.0 Flash
+
+Built upon core ML findings, this extension explores whether advanced LLM reasoning can improve toxicity detection:
+- **Contextual Understanding**: Detects subtle toxicity (sarcasm, passive-aggression)
+- **Comparative Analysis**: Identifies patterns that traditional ML may miss
+- **Output Format**: Structured JSON with detailed reasoning and classifications
 
 ## Support
 
